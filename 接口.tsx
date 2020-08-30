@@ -115,6 +115,55 @@ mySearch1 = function (sour, sub) {
     return result > -1;
 }
 
+// 可索引的类型，与使用接口描述函数类型差不多。
+// 可索引类型具有一个索引签名，它描述了对象索引的类型，还有相应的索引返回值类型
+interface stringArray {
+    [index: number]: string;
+}
+let myArray: stringArray;
+myArray = ['Bob', 'Fred'];
+
+let myStr: string = myArray[0];
+
+// Ts支持两种索引签名：字符串和数字。
+// 可以同时使用两种类型的索引，但是数字索引的返回值必须是字符串索引返回值类型的子类型
+class Animal {
+    name: string;
+}
+class Dog extends Animal {
+    breed: string;
+}
+
+// 错误：使用数值型的字符串索引，有时候会得到不同的Animal！(没搞懂)
+interface NotOkey {
+    [x: string]: Dog;
+    [x: number]: Animal;
+}
+
+// 观察下面的例子
+interface numberDictionary {
+    [index: string]: number;
+    length: number; // ok;length是number类型
+    name: string;  // error;name的类型与索引类型返回值的类型不匹配
+}
+
+// 可以设置索引签名为只读，防止索引赋值
+interface readonlyStringArray{
+    readonly [index: number]: string;
+}
+let myArray2: readonlyStringArray = ['Alice', 'Bob']
+myArray2[2] = 'uzi' // 索引签名是制只读的，不能设置
+
+
+
+
+
+
+
+
+
+
+
 
 
 
